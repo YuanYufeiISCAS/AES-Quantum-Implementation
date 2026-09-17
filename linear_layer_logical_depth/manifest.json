@@ -1,0 +1,554 @@
+{
+  "schema_version": 1,
+  "paper": {
+    "section": "Appendix A.1",
+    "table": 6,
+    "column": "This work",
+    "snapshot_date": "2026-09-17",
+    "pdf_sha256": "c94f4bca5639aa46df63ab6993b0c8edaa00b812c57bfc6ff5d906da37bd5f10",
+    "tex_sha256": "7f907543c7342f738de7f419400c744ef0fe232df7432642c06896420a3dbc3d",
+    "table_tex_sha256": "331d0999c35ed6f40d872438848c25207fb9df58b475fe1b219bb9295f1c6ba8"
+  },
+  "circuits": [
+    {
+      "row": 1,
+      "id": "aes",
+      "label": "AES MixColumns",
+      "reference": "[43]",
+      "group": "cipher",
+      "file": "circuits/aes.json",
+      "wires": 32,
+      "cnots": 116,
+      "logical_depth": 9,
+      "sha256": "d882662abcebae2234853071953873b94fdafa35f444b6d3e944adcd70ef5411",
+      "source": {
+        "circuit": "results/codex_related_20260509/aes_logical_s256_t240/aes_trial0_logical.json",
+        "circuit_sha256": "13b8a1f430ba4bf92be222977c6d05a6809d351307694f5e6714462a40e51765",
+        "matrix": "data/linear_layers/AES.txt",
+        "matrix_sha256": "0485b58ea75bea050368055a9b1917e9da5e4a2576b0900df5e73a5cb02f6e6d"
+      }
+    },
+    {
+      "row": 2,
+      "id": "anubis",
+      "label": "ANUBIS",
+      "reference": "[5]",
+      "group": "cipher",
+      "file": "circuits/anubis.json",
+      "wires": 32,
+      "cnots": 121,
+      "logical_depth": 11,
+      "sha256": "3f037a66612beb7c045917c86d077b4ee9c80efb9cc14397b6bac0a8d8a1eedc",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32probe/logical_match_lm/anubis/anubis_trial0_logical.json",
+        "circuit_sha256": "69a4cc7ba82d4b1b6f970824dce193598622d8612a77bca8b4a787413fb62577",
+        "matrix": "data/linear_layers/Anubis.txt",
+        "matrix_sha256": "017fc40b7ad0c3a265dd1a740169c1109a422bfcdeb9e5f5edd4b4d0685bd4f6"
+      }
+    },
+    {
+      "row": 3,
+      "id": "clefia-m0",
+      "label": "CLEFIA M0",
+      "reference": "[67]",
+      "group": "cipher",
+      "file": "circuits/clefia-m0.json",
+      "wires": 32,
+      "cnots": 125,
+      "logical_depth": 10,
+      "sha256": "f1f1eb7c3762a5c8fe6c07039aa2a3d24a02069f646ecde7204b5d9386f62544",
+      "source": {
+        "circuit": "results/codex_20260519_other_layers_block_hard_full/logical_match_lm/clefia-m0/clefia-m0_trial0_logical.json",
+        "circuit_sha256": "53047e90e31bcbec3bbdf75ee72cb6d2e81b64c7e41908dcb6e1631e8f1a9013",
+        "matrix": "data/linear_layers/Clefia_M0.txt",
+        "matrix_sha256": "6849f53b82d570d987458662e7166816dacee0ee1b39f34801e19b7913112766"
+      }
+    },
+    {
+      "row": 4,
+      "id": "clefia-m1",
+      "label": "CLEFIA M1",
+      "reference": "[67]",
+      "group": "cipher",
+      "file": "circuits/clefia-m1.json",
+      "wires": 32,
+      "cnots": 129,
+      "logical_depth": 10,
+      "sha256": "0aea5a4aafd44035e3b881971379ab325c9f0751ea8204185f6ba47569f8e4a5",
+      "source": {
+        "circuit": "results/codex_related_20260509/logical_block_s16/clefia-m1_trial0_logical.json",
+        "circuit_sha256": "cacebfab635442906868dd6b1cd55d4e9be83fdf4f602ae892a1f9daaeb65b17",
+        "matrix": "data/linear_layers/Clefia_M1.txt",
+        "matrix_sha256": "53618066e8996872b5577f02ef03ea89b50c68c560e7d6e900ea537a7350b83e"
+      }
+    },
+    {
+      "row": 5,
+      "id": "fox-mu4",
+      "label": "Fox mu4",
+      "reference": "[45]",
+      "group": "cipher",
+      "file": "circuits/fox-mu4.json",
+      "wires": 32,
+      "cnots": 205,
+      "logical_depth": 20,
+      "sha256": "9748f43985d607319a02a92845019ee5a5e85289351335345201021d3ba0af23",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/fox-mu4/fox-mu4_trial0_logical.json",
+        "circuit_sha256": "3704b24e12f12b130d256003471e78f6e4c1873673901a527ee9a6c8d4182746",
+        "matrix": "data/linear_layers/Fox_Mu4.txt",
+        "matrix_sha256": "c9eb0e11353a4c9b5e48af386009878e98b7ad41fe76064ddc8edc5afb4196be"
+      }
+    },
+    {
+      "row": 6,
+      "id": "qarma128",
+      "label": "QARMA128",
+      "reference": "[2]",
+      "group": "cipher",
+      "file": "circuits/qarma128.json",
+      "wires": 32,
+      "cnots": 48,
+      "logical_depth": 3,
+      "sha256": "c76ac1338ca2362e443436e9e844c6675c7337cd763193dd07cb299ccbc2082c",
+      "source": {
+        "circuit": "results/codex_tuning_probe/qarma128_g2_s128_w3/qarma128_trial0_logical.json",
+        "circuit_sha256": "875afbd4dcf1e6e855418026bf7fdf5ea82e7b23f5c27a19664b301a8cf975fa",
+        "matrix": "data/linear_layers/QARMA128.txt",
+        "matrix_sha256": "f68351dbe91b6fea44e9b51b3ac99efae92aadbb0f403fc342cc48055cdd606a"
+      }
+    },
+    {
+      "row": 7,
+      "id": "twofish",
+      "label": "Twofish",
+      "reference": "[65]",
+      "group": "cipher",
+      "file": "circuits/twofish.json",
+      "wires": 32,
+      "cnots": 167,
+      "logical_depth": 14,
+      "sha256": "6d645846f980e6d0cd8126517f62d63fa7692bb8f37582e98dd50e0f0a41415c",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/twofish/twofish_trial0_logical.json",
+        "circuit_sha256": "b6949ec3c502bb1d47cdfc617e170842772888769d8dabab3cd73bd96bd27d60",
+        "matrix": "data/linear_layers/Twofish.txt",
+        "matrix_sha256": "a4e70ffbc8d86ee818a4b9dae70175b420991863c316130a3589aa23601f44a7"
+      }
+    },
+    {
+      "row": 8,
+      "id": "whirlwind-m0",
+      "label": "Whirlwind M0",
+      "reference": "[4]",
+      "group": "cipher",
+      "file": "circuits/whirlwind-m0.json",
+      "wires": 32,
+      "cnots": 268,
+      "logical_depth": 23,
+      "sha256": "d5487c8e6466e29452ed90b63ae90df9f505f757cc5040366c2000488fea8bb0",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/whirlwind-m0/whirlwind-m0_trial0_logical.json",
+        "circuit_sha256": "8e2036f4ac9938ee1ead2fff7ede08b211c10877d530d66618917a4051cc5c61",
+        "matrix": "data/linear_layers/Whirlwind_M0.txt",
+        "matrix_sha256": "8a84582f3a70c0441e74b1a31ad63f57163db4d727127ea52f3e8be810388ad9"
+      }
+    },
+    {
+      "row": 9,
+      "id": "whirlwind-m1",
+      "label": "Whirlwind M1",
+      "reference": "[4]",
+      "group": "cipher",
+      "file": "circuits/whirlwind-m1.json",
+      "wires": 32,
+      "cnots": 225,
+      "logical_depth": 21,
+      "sha256": "d134026a4164cefc297d62843412b2c6ee662ff2da907a5a20dab73bfe62c398",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/whirlwind-m1/whirlwind-m1_trial0_logical.json",
+        "circuit_sha256": "a9e482793bc4f0f05a5bea29464930a03accb19b796b86a65165fc6a3ddcc7c8",
+        "matrix": "data/linear_layers/Whirlwind_M1.txt",
+        "matrix_sha256": "16f095d1d0a342ba3a87c95fb47fedf8f5a2f7e51e2e3919afccec9b2d116d38"
+      }
+    },
+    {
+      "row": 10,
+      "id": "joltik",
+      "label": "Joltik",
+      "reference": "[41]",
+      "group": "cipher",
+      "file": "circuits/joltik.json",
+      "wires": 16,
+      "cnots": 48,
+      "logical_depth": 7,
+      "sha256": "fda7f7c7526b0f7556db456eb08ccd60c5bde1f01d1d6217d0134600bdea5f8d",
+      "source": {
+        "circuit": "results/codex_tuning_probe/joltik_g6_s128_w3/joltik_trial0_logical.json",
+        "circuit_sha256": "0fd8a7bf5cf508eea51bdfe723c9d8c065c6ee88de1df924ea9bb6dd3de5e867",
+        "matrix": "data/linear_layers/Joltik.txt",
+        "matrix_sha256": "c4129c23f843bc4b9da594a3ef32ce462ab0ba2fe4cf2cf447791ee4da2d8e80"
+      }
+    },
+    {
+      "row": 11,
+      "id": "midori",
+      "label": "MIDORI",
+      "reference": "[3]",
+      "group": "cipher",
+      "file": "circuits/midori.json",
+      "wires": 16,
+      "cnots": 24,
+      "logical_depth": 3,
+      "sha256": "e7d9ea88cac9ff57e2b95991a00607ce1e06ce6d5b423ad80eb0c61541716e0d",
+      "source": {
+        "circuit": "results/codex_tuning_probe/midori_g2_s128_w3/midori_trial0_logical.json",
+        "circuit_sha256": "750440eb7ddceb0e3fd4029aa58f8821a0930815d6bf7ccd4d954eeb882e92f9",
+        "matrix": "data/linear_layers/MIDORI.txt",
+        "matrix_sha256": "d0010ad53ae7c767b87d5f1550bd00180105940bdb7a47d0f650580031e143aa"
+      }
+    },
+    {
+      "row": 12,
+      "id": "smallscale-aes",
+      "label": "SmallScale AES",
+      "reference": "[14]",
+      "group": "cipher",
+      "file": "circuits/smallscale-aes.json",
+      "wires": 16,
+      "cnots": 55,
+      "logical_depth": 9,
+      "sha256": "79ab98bab4694eccae32ccd4d73fd6d29d3879d5bd41c0c302f72ee0ccbfc437",
+      "source": {
+        "circuit": "results/codex_related_20260509/logical_block_s16/smallscale-aes_trial0_logical.json",
+        "circuit_sha256": "30129678cc0a2e0bf2e9d96a039b98bdb2cde25d85a2c51299505f665e46c90e",
+        "matrix": "data/linear_layers/SmallScale_AES.txt",
+        "matrix_sha256": "14bb0d7af9d501459f322d6136eeb091edffb7b0ba6db716bd51627c2d0f4897"
+      }
+    },
+    {
+      "row": 13,
+      "id": "mds-skop15-4x4-4",
+      "label": "SKOP15",
+      "reference": "[70]",
+      "group": "4x4-blocks-4bit",
+      "file": "circuits/mds-skop15-4x4-4.json",
+      "wires": 16,
+      "cnots": 60,
+      "logical_depth": 10,
+      "sha256": "235c7ebc01330cae51776073c686986d61b88945acce176c9e22eaaade6eec7b",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_mds16/logical_breakthrough_lm/mds-skop15-4x4-4/mds-skop15-4x4-4_trial0_logical.json",
+        "circuit_sha256": "960a40c1cf856fcb49dfcf60838e081ecf62fed55799d09cf09ad17856e93fd6",
+        "matrix": "data/linear_layers/FSE_SKOP15_4x4_4.txt",
+        "matrix_sha256": "8e30103f3604d1177d7beb3c10fec563ebdd665154e84a504b8fde1abd363028"
+      }
+    },
+    {
+      "row": 14,
+      "id": "mds-liusim16-4x4-4",
+      "label": "Liu-Sim16",
+      "reference": "[57]",
+      "group": "4x4-blocks-4bit",
+      "file": "circuits/mds-liusim16-4x4-4.json",
+      "wires": 16,
+      "cnots": 60,
+      "logical_depth": 10,
+      "sha256": "3ff79d9ba4564228c7ac7e850fe78caefb549b81b5644827435dbff6adb2e02b",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_mds16/logical_breakthrough_lm/mds-liusim16-4x4-4/mds-liusim16-4x4-4_trial0_logical.json",
+        "circuit_sha256": "e121e7bf0fd131e036ca34610ba1e0da9d5a050662331295e2b21da950611ecb",
+        "matrix": "data/linear_layers/FSE_LiuSim16_4x4_4.txt",
+        "matrix_sha256": "e06b551595437dbf3634af242e8785bb74b2e4aef75748e8e89832417fcca4d9"
+      }
+    },
+    {
+      "row": 15,
+      "id": "mds-liwang16-4x4-4",
+      "label": "Li-Wang16",
+      "reference": "[51]",
+      "group": "4x4-blocks-4bit",
+      "file": "circuits/mds-liwang16-4x4-4.json",
+      "wires": 16,
+      "cnots": 64,
+      "logical_depth": 10,
+      "sha256": "43d0022615a6f66d72639f7325fae82df595eaec6f7631bc84a1edd11e3a3569",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_mds16/logical_breakthrough_lm/mds-liwang16-4x4-4/mds-liwang16-4x4-4_trial0_logical.json",
+        "circuit_sha256": "efc567a0db0abaca7d53bd6b9484b81a81a455bcf0fc1390520eff53d2afa922",
+        "matrix": "data/linear_layers/FSE_LiWang16_4x4_4.txt",
+        "matrix_sha256": "4011603cc6b0f3e15d1226f71c31eabd3acb0bcecafa7c703a4ab77d5517e0a6"
+      }
+    },
+    {
+      "row": 16,
+      "id": "mds-ctg16-4x4-4",
+      "label": "CTG16",
+      "reference": "[13]",
+      "group": "4x4-blocks-4bit",
+      "file": "circuits/mds-ctg16-4x4-4.json",
+      "wires": 16,
+      "cnots": 54,
+      "logical_depth": 9,
+      "sha256": "e28ddf79e2a57180ff192a8ed757c5fd0083fc2a54b099d59b444ad297ecd1ba",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_mds16/logical_breakthrough_lm/mds-ctg16-4x4-4/mds-ctg16-4x4-4_trial0_logical.json",
+        "circuit_sha256": "c7094e1a04944a097a2b5fd18be8c59e14bae8e286f34f0e1e49e9636e15e0c4",
+        "matrix": "data/linear_layers/C_BeiKraLea16_4x4_4.txt",
+        "matrix_sha256": "d8a5bf266c76851eaf863b1a9fe1bb5a8ce4298110d4eb4140818f2a05d030ae"
+      }
+    },
+    {
+      "row": 17,
+      "id": "mds-jpst17-4x4-4",
+      "label": "JPST17",
+      "reference": "[42]",
+      "group": "4x4-blocks-4bit",
+      "file": "circuits/mds-jpst17-4x4-4.json",
+      "wires": 16,
+      "cnots": 52,
+      "logical_depth": 8,
+      "sha256": "727410cef93c87d023edc5ddb232c8e0d1f2722c9d7ae0f26f0dc3fbde00588f",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_mds16/logical_breakthrough_lm/mds-jpst17-4x4-4/mds-jpst17-4x4-4_trial0_logical.json",
+        "circuit_sha256": "1b2b79ba6afa1f3f9b55e8f6c471fe8a1bff0d44a8a7f8924100307e0da45c5a",
+        "matrix": "data/linear_layers/ePrint_JeaPeySim_4x4_4.txt",
+        "matrix_sha256": "0c3f9b6eda4adaf805756876308fc04d55f66791d9ad6cc0445a8c1b601f73d1"
+      }
+    },
+    {
+      "row": 18,
+      "id": "mds-skop15-4x4-8",
+      "label": "SKOP15",
+      "reference": "[70]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-skop15-4x4-8.json",
+      "wires": 32,
+      "cnots": 110,
+      "logical_depth": 8,
+      "sha256": "5ab942e4491e54d6218fb97d2042a245e4168b73c385c081cb88f8c827dd7398",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-skop15-4x4-8/mds-skop15-4x4-8_trial0_logical.json",
+        "circuit_sha256": "8af7d431db135a05dc54076afd7829091f2a04bd27f437942d7a3be994929b0d",
+        "matrix": "data/linear_layers/FSE_SKOP15_4x4_8.txt",
+        "matrix_sha256": "43efe7dbf75cfce75bc80d9f812a7c4fe0ffafb81689d445903f39070513cdd1"
+      }
+    },
+    {
+      "row": 19,
+      "id": "mds-liusim16-4x4-8",
+      "label": "Liu-Sim16",
+      "reference": "[57]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-liusim16-4x4-8.json",
+      "wires": 32,
+      "cnots": 189,
+      "logical_depth": 19,
+      "sha256": "7a0ccc1649a8609b0edc7281c3f2f7483faf854f20b1d7e5ca5e660be053a402",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-liusim16-4x4-8/mds-liusim16-4x4-8_trial0_logical.json",
+        "circuit_sha256": "b396c0b76f4c4802690b6fdd0643140657a8081e0d784be4d59c70874ed6a25d",
+        "matrix": "data/linear_layers/FSE_LiuSim16_4x4_8.txt",
+        "matrix_sha256": "32c475d5abbd637011dbf7c2773730b0e814c3f1f5ed4b32901ca4aab97798a0"
+      }
+    },
+    {
+      "row": 20,
+      "id": "mds-liwang16-4x4-8",
+      "label": "Li-Wang16",
+      "reference": "[51]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-liwang16-4x4-8.json",
+      "wires": 32,
+      "cnots": 156,
+      "logical_depth": 15,
+      "sha256": "a552c8d825443e4f342f9397e30070ffbf3962df1af6065f4cf584b9c1083cdc",
+      "source": {
+        "circuit": "results/codex_20260519_other_layers_mds_quick/logical_match_lm/mds-liwang16-4x4-8/mds-liwang16-4x4-8_trial0_logical.json",
+        "circuit_sha256": "4ef8a3384556fb6f08ef90c823aacad22c5ff040ca5e0c3899361338d9b802a2",
+        "matrix": "data/linear_layers/FSE_LiWang16_4x4_8.txt",
+        "matrix_sha256": "f4059005b9f1a40657fd5f0346dfeb5e6c01f63c20982217ff8498c3d724cdaf"
+      }
+    },
+    {
+      "row": 21,
+      "id": "mds-ctg16-4x4-8",
+      "label": "CTG16",
+      "reference": "[13]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-ctg16-4x4-8.json",
+      "wires": 32,
+      "cnots": 165,
+      "logical_depth": 17,
+      "sha256": "8d6b7cc1f6d552af5909202d88ba45cd7e6a01cc6e71e368a46a531de1859605",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-ctg16-4x4-8/mds-ctg16-4x4-8_trial0_logical.json",
+        "circuit_sha256": "95aa3b4a9890692031f75515364d3983df37caa8fe10e110b22adbc676471416",
+        "matrix": "data/linear_layers/C_BeiKraLea16_4x4_8.txt",
+        "matrix_sha256": "ca319dcb71503a1d5f165b5be1cb7217843616cd7491454cb1dea330c75ea7e6"
+      }
+    },
+    {
+      "row": 22,
+      "id": "mds-tosc-sarsye16-4x4-8",
+      "label": "Sarkar-Syed16",
+      "reference": "[63]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-tosc-sarsye16-4x4-8.json",
+      "wires": 32,
+      "cnots": 179,
+      "logical_depth": 19,
+      "sha256": "81a914b034a9099bdecf816367d0242b89075b16363133adb6f1d16470bf2d54",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-tosc-sarsye16-4x4-8/mds-tosc-sarsye16-4x4-8_trial0_logical.json",
+        "circuit_sha256": "ed0476a8acd8666ab9a8bc94a8543d2767d89b32d7a4882ae8845108835bafbe",
+        "matrix": "data/linear_layers/ToSC_SarSye16_4x4_8.txt",
+        "matrix_sha256": "9e208b6ca0a12c7ee5244206c32abe0a4302f04e62f7379975d3b607eeb3edff"
+      }
+    },
+    {
+      "row": 23,
+      "id": "mds-jpst17-4x4-8",
+      "label": "JPST17",
+      "reference": "[42]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-jpst17-4x4-8.json",
+      "wires": 32,
+      "cnots": 107,
+      "logical_depth": 9,
+      "sha256": "040bf723bc72988fdb030e53970f989b881a61b4e5db7b7c22e8ae402c5efea7",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-jpst17-4x4-8/mds-jpst17-4x4-8_trial0_logical.json",
+        "circuit_sha256": "7b2d143dc17601d14bcec2b9680b14c1928a96fae7edb7920cee0d45c95e5315",
+        "matrix": "data/linear_layers/ePrint_JeaPeySim_4x4_8.txt",
+        "matrix_sha256": "81dc1e63a052cbf58d6cb3e443119e2d18aa962dfbe772d1a89b8f7f666f92a2"
+      }
+    },
+    {
+      "row": 24,
+      "id": "mds-skop15-i-4x4-8",
+      "label": "SKOP15, involutory",
+      "reference": "[70]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-skop15-i-4x4-8.json",
+      "wires": 32,
+      "cnots": 104,
+      "logical_depth": 8,
+      "sha256": "96302a700f30660c6edf6ca719c492e036a55c5b564afb844987a4f0de4bea52",
+      "source": {
+        "circuit": "results/codex_20260519_other_layers_mds_hard_full/logical_match_lm/mds-skop15-i-4x4-8/mds-skop15-i-4x4-8_trial0_logical.json",
+        "circuit_sha256": "4adda1f69d41f5ebe7ccba829444196dda54a66e3b5129c3905c4a39dac2c09f",
+        "matrix": "data/linear_layers/FSE_SKOP15_i_4x4_8.txt",
+        "matrix_sha256": "160bc02e5aa8be618843b0552dfaea17c259ed6fe9ff2803758525c65b53057b"
+      }
+    },
+    {
+      "row": 25,
+      "id": "mds-liwang16-i-4x4-8",
+      "label": "Li-Wang16, Hadamard, involutory",
+      "reference": "[51]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-liwang16-i-4x4-8.json",
+      "wires": 32,
+      "cnots": 97,
+      "logical_depth": 8,
+      "sha256": "006dfb92a0239a382a2b1205e6237da65bb088a0a0edc8c2b061706592822c41",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-liwang16-i-4x4-8/mds-liwang16-i-4x4-8_trial0_logical.json",
+        "circuit_sha256": "a5835f85880b6c03adaf0c47a013ec93b2a4d28d40f3275c9caaea16c6f4d827",
+        "matrix": "data/linear_layers/FSE_LiWang16_i_4x4_8.txt",
+        "matrix_sha256": "36c9468d3ec64bba3a906585835998499360a8803ebcfa811a4a586cb6c12f37"
+      }
+    },
+    {
+      "row": 26,
+      "id": "mds-tosc-sarsye16-i-4x4-8",
+      "label": "Sarkar-Syed16, involutory",
+      "reference": "[63]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-tosc-sarsye16-i-4x4-8.json",
+      "wires": 32,
+      "cnots": 109,
+      "logical_depth": 10,
+      "sha256": "aa8d14689e6b92914aa1b7cf24660ef4c031c7902a42614a901692c0a6adc358",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-tosc-sarsye16-i-4x4-8/mds-tosc-sarsye16-i-4x4-8_trial0_logical.json",
+        "circuit_sha256": "04d881cb2a997f6e345a4779a8418c5aa007ef6c8d6b3ec26ef8972c9109fdb5",
+        "matrix": "data/linear_layers/ToSC_SarSye16_i_4x4_8.txt",
+        "matrix_sha256": "17f20d5e69903d9e2392d74093baae7f9ad29fd178df121deef5f20f4e6ca90c"
+      }
+    },
+    {
+      "row": 27,
+      "id": "mds-jpst17-i-4x4-8",
+      "label": "JPST17, involutory",
+      "reference": "[42]",
+      "group": "4x4-blocks-8bit",
+      "file": "circuits/mds-jpst17-i-4x4-8.json",
+      "wires": 32,
+      "cnots": 100,
+      "logical_depth": 9,
+      "sha256": "c00fa10f414f25955e38e4472347925caa2524ae098eea149a7b558e1299b835",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-jpst17-i-4x4-8/mds-jpst17-i-4x4-8_trial0_logical.json",
+        "circuit_sha256": "45a7441b6ce0ee3da41553e7cd1088a773246af9526ec456df6916a9357d50ea",
+        "matrix": "data/linear_layers/ePrint_JeaPeySim_i_4x4_8.txt",
+        "matrix_sha256": "72352c64be08fdbed5bbcf476d0c83861f29a3acf1f82f3f59861fc995be36c5"
+      }
+    },
+    {
+      "row": 28,
+      "id": "mds-skop15-8x8-4",
+      "label": "SKOP15",
+      "reference": "[70]",
+      "group": "8x8-blocks-4bit",
+      "file": "circuits/mds-skop15-8x8-4.json",
+      "wires": 32,
+      "cnots": 272,
+      "logical_depth": 24,
+      "sha256": "a7f66d68bec8532804e1cc18d36d07b4eb17e0f114887795ebd91f0b9ec8cd4c",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-skop15-8x8-4/mds-skop15-8x8-4_trial0_logical.json",
+        "circuit_sha256": "c667960f3bf6bde43a039c039f7ab186df4d2feb0c62d3343694b905e6e7fb02",
+        "matrix": "data/linear_layers/FSE_SKOP15_8x8_4.txt",
+        "matrix_sha256": "2e58e7c565bbc5559a737f080baa8a9acb4925b944bd16eb91db98a914d437af"
+      }
+    },
+    {
+      "row": 29,
+      "id": "mds-ss17-8x8-4",
+      "label": "Sarkar-Syed17",
+      "reference": "[64]",
+      "group": "8x8-blocks-4bit",
+      "file": "circuits/mds-ss17-8x8-4.json",
+      "wires": 32,
+      "cnots": 281,
+      "logical_depth": 27,
+      "sha256": "7129dfb18e12c21579649e248f745335f51f77756ccf69f81b1ce39b48c400ec",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-ss17-8x8-4/mds-ss17-8x8-4_trial0_logical.json",
+        "circuit_sha256": "80ecd183150ec96ded7663089e842ae214d764ba4e47a167426676c6ecbfb11c",
+        "matrix": "data/linear_layers/ACISP_SarSye17_8x8_4.txt",
+        "matrix_sha256": "d60580d2639d4aff986f3ba271d624bd343224496ea823a7586764b010df6f48"
+      }
+    },
+    {
+      "row": 30,
+      "id": "mds-skop15-i-8x8-4",
+      "label": "SKOP15, involutory",
+      "reference": "[70]",
+      "group": "8x8-blocks-4bit",
+      "file": "circuits/mds-skop15-i-8x8-4.json",
+      "wires": 32,
+      "cnots": 239,
+      "logical_depth": 20,
+      "sha256": "43d6b44056096953523e18b4812a99c9e3fdad1baa1d0995907eba65602a6086",
+      "source": {
+        "circuit": "results/codex_tuned_20260509_32short/logical_breakthrough_lm/mds-skop15-i-8x8-4/mds-skop15-i-8x8-4_trial0_logical.json",
+        "circuit_sha256": "92c0cea66e8d17f9ea9842f54ebd5197f4bb42e0f36492dd473ad3b285ebbf2b",
+        "matrix": "data/linear_layers/FSE_SKOP15_i_8x8_4.txt",
+        "matrix_sha256": "20feeb926ba13273ec292dbee162c422150aff7cb3db67af3edfae45a8c8c761"
+      }
+    }
+  ]
+}
