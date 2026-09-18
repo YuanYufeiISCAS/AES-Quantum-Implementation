@@ -1,11 +1,9 @@
 # Logical-depth witnesses for linear layers
 
 This directory contains all 30 circuits in the **This work** column of
-Appendix A.1, Table 6, in the PDF compiled on September 17, 2026 at
-14:05:12 UTC:
-12 cipher linear layers and 18 binary block matrices. Every circuit is an
-in-place CNOT network on 16 or 32 wires, with its explicit target matrix,
-layer schedule, and output permutation.
+Appendix A.1, Table 6: 12 cipher linear layers and 18 binary block matrices.
+Every circuit is an in-place CNOT network on 16 or 32 wires, with its explicit
+target matrix, layer schedule, and output permutation.
 
 ## Run
 
@@ -25,23 +23,23 @@ working directories. The default command checks all 30 rows and prints
 failure, and 2 for invalid command-line arguments. Checks also run under
 `python3 -O`.
 
-To inspect a modified witness without editing the archived files:
+To inspect a modified witness without editing the bundled circuits:
 
 ```bash
 python3 linear_layer_logical_depth/verify.py --circuit /path/to/candidate.json
 ```
 
 This mode checks the candidate against the matching Table 6 ID, expected
-wire/gate/depth counts, and archived target matrix. It permits different JSON
+wire/gate/depth counts, and bundled target matrix. It permits different JSON
 formatting or a different valid circuit, so the candidate's file hash is omitted.
-The archived reference file's hash is still checked.
+The bundled reference file's hash is still checked.
 
 ## Files and conventions
 
 - `manifest.json`: the 30 table rows in paper order, expected counts/depths,
-  citation numbers, group labels, source paths, and SHA-256 digests.
+  citation numbers, group labels, and circuit-integrity hashes.
 - `circuits/<id>.json`: the complete target matrix and logical circuit for one
-  row. Gates, layer order, and output permutations retain the source witness.
+  row, including every gate, its layer, and the output permutation.
 - `verify.py`: independent matrix replay, bit-string simulation, depth
   accounting, input validation, and built-in self-tests.
 
@@ -87,8 +85,8 @@ relabeling convention; it adds no SWAP gates to the logical metric.
    by `last[c] = last[t] = level`. Both the saved schedule and this ASAP depth
    must equal the paper's depth.
 
-For each row the explicit binary matrix is the target, independently copied
-from the experiment's matrix catalogue. AES receives an additional check:
+For each row the explicit binary matrix defines the target map.
+AES receives an additional check:
 the verifier derives its 32-bit matrix from the standard MixColumns byte
 coefficients over the polynomial `x^8 + x^4 + x^3 + x + 1` (`0x11b`).
 
@@ -102,13 +100,13 @@ These measurements precede geometric routing and surface-code cycle accounting.
 Self-tests run the full dataset and deliberately corrupt gates, permutations,
 matrices, layer endpoints, expected metrics, hashes, and package metadata.
 A three-cycle test checks permutation direction; an altered-target test checks
-that external witnesses remain tied to the archived matrix. Corruption tests
+that external witnesses remain tied to the bundled matrix. Corruption tests
 call the mathematical verifier directly where appropriate, independently of
 the file-hash check. Tests modify in-memory copies only.
 
 ## Table 6 coverage
 
-Reference numbers identify the matrix constructions in the manuscript snapshot.
+Reference numbers identify the matrix constructions cited in Table 6.
 For block-matrix IDs, the final three dimensions specify the block-array shape
 and the size of each square binary block: `4x4-8`, for example, is a 4-by-4
 array of 8-by-8 binary blocks, giving 32 wires. `-i-` denotes an involutory
@@ -146,24 +144,3 @@ variant. The `group` and `label` fields distinguish variants in the manifest.
 | 28 | `mds-skop15-8x8-4` | [70] | 32 | 272 | 24 |
 | 29 | `mds-ss17-8x8-4` | [64] | 32 | 281 | 27 |
 | 30 | `mds-skop15-i-8x8-4` | [70] | 32 | 239 | 20 |
-
-## Provenance
-
-The manifest's PDF digest defines the authoritative manuscript snapshot.
-The LaTeX source and Table 6 fragment digests record their state at extraction
-time; later source edits belong to a subsequent manuscript snapshot.
-Per-row provenance records the original logical
-result JSON and the separate input matrix file, also with digests. Source
-paths are relative to the original experiment directory and serve as archival
-identifiers; the checker reads only files in this directory.
-
-The circuits were matched to the updated paper through
-`results/codex_tuned_20260509/summary.csv` and
-`results/codex_20260519_other_layers_summary.csv`. The follow-up archive supplies
-the revised CLEFIA M0, `mds-liwang16-4x4-8`, and `mds-skop15-i-4x4-8` witnesses.
-Extraction retained the exact
-control/target pairs, layer order, and output permutation, and encoded the
-catalogue's target matrices as explicit binary rows. The circuit files contain
-the mathematical witnesses; synthesis settings, search logs and routing data
-remain in the original experiment archive. Reference-construction columns of
-Table 6 supply comparisons; the 30 packaged witnesses correspond to **This work**.

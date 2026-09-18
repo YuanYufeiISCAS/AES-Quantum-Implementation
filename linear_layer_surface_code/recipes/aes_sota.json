@@ -1,0 +1,12 @@
+{
+  "synthesis_seed": 16597946,
+  "initial_expected": {"cnots": 114, "layers": 12, "cycles": 24},
+  "stages": [
+    {"seed": 1017803937, "proposals": 65536, "routes": 512, "rounds": 51, "growth": 0, "slack": 0, "free_output": false, "expected": {"cnots": 106, "layers": 11, "cycles": 22}},
+    {"seed": 1149029374, "proposals": 65536, "routes": 512, "rounds": 149, "growth": 0, "slack": 0, "free_output": false, "expected": {"cnots": 105, "layers": 11, "cycles": 22}},
+    {"seed": 1911980139, "proposals": 131072, "routes": 2048, "rounds": 70, "growth": 6, "slack": 4, "free_output": true, "expected": {"cnots": 104, "layers": 11, "cycles": 22}},
+    {"seed": 1963297349, "proposals": 131072, "routes": 2048, "rounds": 1, "growth": 6, "slack": 4, "free_output": true, "expected": {"cnots": 103, "layers": 11, "cycles": 22}},
+    {"seed": 2052945373, "proposals": 131072, "routes": 2048, "rounds": 65, "growth": 6, "slack": 4, "free_output": true, "expected": {"cnots": 102, "layers": 11, "cycles": 22}},
+    {"seed": 2773166706, "proposals": 131072, "routes": 2048, "rounds": 14, "growth": 4, "slack": 2, "free_output": false, "expected": {"cnots": 103, "layers": 10, "cycles": 20}}
+  ]
+}
