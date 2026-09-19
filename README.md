@@ -13,7 +13,8 @@ compiler. Each module includes concrete circuit data and an independent verifier
 | --- | --- | --- |
 | [Logical linear layers](linear_layer_logical_depth/README.md) | Target matrices, layered CNOT circuits, output permutations, and a Python verifier | 30 linear maps on 16 or 32 wires; AES MixColumns uses 116 CNOTs at logical depth 9 |
 | [Surface-code linear layers](linear_layer_surface_code/README.md) | C++ matrix synthesis, local circuit rewriting, routing, and Python verification | AES MixColumns: 103 CNOTs in 10 VDP layers, or 20 cycles, on a 9 × 17 grid |
-| [Surface-code S-boxes](sbox_surface_code/README.md) | Joint optimization of linear blocks, nonlinear operations, placements, and schedules | In-place and Liao–Luo C* S-boxes on 1–5-row layouts; saved circuits, recipe replay, and fresh search |
+| [Surface-code S-boxes](sbox_surface_code/README.md) | Joint optimization followed by concurrent primitive scheduling | Integrated state/key S-boxes: 472/428 cycles; four-row C* refinement: 412 cycles |
+| [Adapted LSC-CCZ baseline](sbox_surface_code/lsc_ccz_baseline/README.md) | Explicit nonlinear lowering, LSC routing/scheduling, and independent replay | AES evaluation/uncomputation: 7,159/7,009 cycles |
 
 The logical-depth module covers 12 cipher linear layers and 18 binary block
 matrices. The two surface-code modules provide optimization algorithms as well
@@ -22,8 +23,17 @@ as saved results for direct inspection and verification.
 ## Requirements
 
 - Python 3.10 or newer. Python code uses only the standard library.
-- CMake 3.16 or newer and a C++17 compiler for the optimization backends.
+- CMake 3.16 or newer and a C++17 GCC or GNU-driver Clang compiler for the
+  optimization backends.
 - A POSIX shell for the command examples below.
+- C++20 and the OpenSSL executable for the adapted LSC-CCZ baseline.
+
+The tested reference environment is Linux x86-64 with GCC 11.4/libstdc++,
+CMake 3.22.1, and Python 3.13.9. Clang builds and other operating systems have
+not been validated. MSVC and clang-cl are unsupported and rejected during
+CMake configuration. Use the reference compiler and standard library to
+reproduce seeded search trajectories; random/shuffle ordering can vary across
+toolchains.
 
 Verification of bundled results runs directly in Python, without building the
 C++ backends. Build the backends before starting matrix synthesis or fresh
@@ -38,6 +48,7 @@ working directory separate:
 python3 -B linear_layer_logical_depth/verify.py
 (cd linear_layer_surface_code && python3 -B -m linear_surface verify)
 (cd sbox_surface_code && python3 -B -m sbox_compile verify)
+(cd sbox_surface_code && python3 -B -m sbox_compile verify --paper)
 ```
 
 - The logical verifier checks all 30 target maps, output permutations, CNOT
@@ -46,7 +57,8 @@ python3 -B linear_layer_logical_depth/verify.py
   paths, data-site obstacles, vertex disjointness, and cycle count.
 - The S-box verifier checks complete physical circuits, footprints, causal
   dependencies, conditional corrections, resets, semantics, and reported costs.
-  It checks ten main cases and the additional three-row placement-cover circuit.
+  The default command checks the synthesis witnesses; `--paper` checks the ten
+  integrated concurrent schedules and the separately identified C* refinement.
 
 Successful verification returns exit status 0; invalid circuits return a
 nonzero status. The module READMEs describe commands for individual circuits,
@@ -63,6 +75,11 @@ cmake --build linear_layer_surface_code/build -j 2
 cmake -S sbox_surface_code -B sbox_surface_code/build -DCMAKE_BUILD_TYPE=Release
 cmake --build sbox_surface_code/build -j 2
 ```
+
+Build directories, Python caches, and generated `runs/` or `output/` directories
+are local outputs. Keep them out of commits using repository-local exclusions
+in `.git/info/exclude`; retain the bundled `circuits/`, `instances/`, `parents/`,
+`recipes/`, and `results/` data.
 
 ### AES MixColumns synthesis and routing
 
@@ -87,10 +104,14 @@ Run from `sbox_surface_code/`:
 python3 -B -m sbox_compile replay --case cstar_4row --output output/replay
 python3 -B -m sbox_compile verify output/replay/circuit.json.gz
 python3 -B -m sbox_compile search --case cstar_4row --seed 2026914746 --iterations 32 --budget 100 --output output/search
+python3 -B -m sbox_compile reproduce --output output/paper
+python3 -B -m sbox_compile schedule --paper --case inplace_3row --starts 2048 --output output/state_schedule
 ```
 
 `replay` reconstructs the supplied transformations from a parent circuit.
-`search` performs a new bounded optimization. Case names are `inplace_1row`
+`search` performs a new bounded synthesis optimization. `reproduce` replays
+the final paper schedules; `schedule` runs the concurrent scheduling portfolio
+on a source circuit. Case names are `inplace_1row`
 through `inplace_5row` and `cstar_1row` through `cstar_5row`.
 
 Use a new output directory for every reproduction, replay, or search run.
@@ -117,10 +138,10 @@ also run without a C++ build.
   routing. Output permutations are explicit in the circuit data.
 - **VDP routed layers** use vertex-disjoint paths on the specified patch grid.
   In the linear-layer module, each VDP layer costs two cycles.
-- **S-box latency** uses the strict native ledger documented in the S-box
-  module, including linear routing, CCZ rounds, H batches, corrections,
-  measurements, and resets. It is a complete-module cost, distinct from CNOT
-  depth alone.
+- **S-box latency** is the completion time of the verified event trace, including
+  routed CNOTs, H gates, CCZ consumption, explicit corrections, measurements,
+  and resets. Independent primitives may overlap. Stage-duration sums retained
+  in synthesis inputs are not the final concurrent latency.
 
 Compare results under the same target map, placement, output convention, and
 cost model. A verified circuit establishes the reported cost for that circuit;

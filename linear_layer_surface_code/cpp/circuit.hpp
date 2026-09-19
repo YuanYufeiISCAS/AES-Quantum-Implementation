@@ -42,10 +42,8 @@ struct Layout {
     int row(int id) const { return id / grid_cols; }
     int col(int id) const { return id % grid_cols; }
 
-    // Return the same deterministic neighbor order as the historical vector
-    // helper, but write into caller-owned storage.  Path routing invokes this
-    // routine millions of times; avoiding a temporary vector and allocator
-    // traffic materially improves throughput without changing BFS/DFS order.
+    // Return neighbors in up/down/left/right order using caller-owned storage.
+    // This keeps BFS/DFS ordering deterministic without per-call allocation.
     int neighbor_ids(int id, std::array<int, 4>& out) const noexcept {
         const int r = row(id);
         const int c = col(id);

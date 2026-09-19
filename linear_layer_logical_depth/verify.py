@@ -70,22 +70,18 @@ def sha256(raw):
 
 def validate_manifest(manifest):
     keys(manifest, ("schema_version", "paper", "circuits"), "manifest")
-    require(integer(manifest["schema_version"], 1, 1), "manifest schema version")
+    require(integer(manifest["schema_version"], 2, 2), "manifest schema version: expected 2")
     paper = manifest["paper"]
-    keys(paper, ("section", "table", "column", "snapshot_date", "pdf_sha256",
-                 "tex_sha256", "table_tex_sha256"), "paper")
+    keys(paper, ("section", "table", "column"), "paper")
     require(paper["section"] == "Appendix A.1"
             and integer(paper["table"], 6, 6)
             and paper["column"] == "This work", "wrong paper/table/column")
-    for field in ("pdf_sha256", "tex_sha256", "table_tex_sha256"):
-        require(isinstance(paper[field], str)
-                and re.fullmatch(r"[0-9a-f]{64}", paper[field]), f"invalid {field}")
     entries = manifest["circuits"]
     require(isinstance(entries, list) and len(entries) == len(TABLE6_IDS),
             "Table 6 must contain exactly 30 circuits")
     for row, (entry, identifier) in enumerate(zip(entries, TABLE6_IDS), 1):
         keys(entry, ("row", "id", "label", "reference", "group", "file",
-                     "wires", "cnots", "logical_depth", "sha256", "source"),
+                     "wires", "cnots", "logical_depth", "sha256"),
              f"manifest row {row}")
         require(integer(entry["row"], row, row) and entry["id"] == identifier,
                 f"row {row}: expected {identifier}")
@@ -98,13 +94,6 @@ def validate_manifest(manifest):
         require(isinstance(entry["sha256"], str)
                 and re.fullmatch(r"[0-9a-f]{64}", entry["sha256"]),
                 f"{identifier}: invalid circuit hash")
-        source = entry["source"]
-        keys(source, ("circuit", "circuit_sha256", "matrix", "matrix_sha256"),
-             f"{identifier} provenance")
-        for field in ("circuit_sha256", "matrix_sha256"):
-            require(isinstance(source[field], str)
-                    and re.fullmatch(r"[0-9a-f]{64}", source[field]),
-                    f"{identifier}: invalid source hash")
     return entries
 
 
@@ -257,10 +246,10 @@ def check_bytes(raw, entry, check_hash=True):
 
 def check_external_bytes(raw, canonical_raw, entry):
     require(sha256(canonical_raw) == entry["sha256"],
-            f"{entry['id']}: archived circuit SHA-256 mismatch")
+            f"{entry['id']}: bundled circuit SHA-256 mismatch")
     result = check_bytes(raw, entry, check_hash=False)
     require(decode_json(raw)["matrix_rows"] == decode_json(canonical_raw)["matrix_rows"],
-            "external target matrix differs from the archived Table 6 target")
+            "external target matrix differs from the bundled Table 6 target")
     return result
 
 
@@ -388,7 +377,7 @@ def run_self_tests():
             with self.assertRaisesRegex(VerificationError, "SHA-256"):
                 check_bytes(raw, entry)
 
-        def test_external_circuit_uses_archived_target(self):
+        def test_external_circuit_uses_bundled_target(self):
             record = entries[1]  # ANUBIS: also cover a target other than AES.
             canonical_raw = (ROOT / record["file"]).read_bytes()
             damaged = decode_json(canonical_raw)
@@ -399,7 +388,7 @@ def run_self_tests():
                 for p in damaged["output_permutation"]]
             # The gates still match this altered matrix and altered relabeling.
             self.assertEqual(verify_circuit(damaged, record)["status"], "PASS")
-            with self.assertRaisesRegex(VerificationError, "archived Table 6 target"):
+            with self.assertRaisesRegex(VerificationError, "bundled Table 6 target"):
                 check_external_bytes(json.dumps(damaged), canonical_raw, record)
 
         def test_duplicate_json_keys(self):
@@ -411,6 +400,37 @@ def run_self_tests():
                 with self.subTest(number=number):
                     with self.assertRaisesRegex(VerificationError, "nonstandard JSON"):
                         decode_json('{"value":' + number + '}')
+
+        def test_manifest_schema_version(self):
+            for version in (1, 3, True, 2.0, "2"):
+                with self.subTest(version=version):
+                    damaged = copy.deepcopy(manifest)
+                    damaged["schema_version"] = version
+                    with self.assertRaisesRegex(VerificationError, "manifest schema version"):
+                        validate_manifest(damaged)
+
+        def test_manifest_field_sets(self):
+            for section, fields in (("paper", ("section", "table", "column")),
+                                    ("row", ("row", "id", "label", "reference", "group",
+                                             "file", "wires", "cnots", "logical_depth", "sha256"))):
+                for field in (*fields, "extra"):
+                    with self.subTest(section=section, field=field):
+                        damaged = copy.deepcopy(manifest)
+                        target = damaged["paper"] if section == "paper" else damaged["circuits"][0]
+                        if field == "extra":
+                            target[field] = "unused"
+                        else:
+                            del target[field]
+                        with self.assertRaisesRegex(VerificationError, "unexpected or missing fields"):
+                            validate_manifest(damaged)
+
+        def test_manifest_circuit_hash(self):
+            for value in (None, "", "0" * 63, "g" * 64):
+                with self.subTest(value=value):
+                    damaged = copy.deepcopy(manifest)
+                    damaged["circuits"][0]["sha256"] = value
+                    with self.assertRaisesRegex(VerificationError, "invalid circuit hash"):
+                        validate_manifest(damaged)
 
         def test_missing_manifest_row(self):
             damaged = copy.deepcopy(manifest)

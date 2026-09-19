@@ -43,7 +43,44 @@ class Fixtures(unittest.TestCase):
                 )
                 self.assertTrue(report["scratch_zero"])
 
-    def test_all_historical_replays(self):
+    def test_result_index(self):
+        index = read(ROOT / "results/index.json.gz")
+        expected_files = {f"{case}.json.gz" for case in CASES} | {"inplace_3row_cover.json.gz"}
+        self.assertEqual(len(index), len(expected_files))
+        self.assertEqual({entry["file"] for entry in index}, expected_files)
+        for entry in index:
+            with self.subTest(file=entry["file"]):
+                self.assertEqual(set(entry), {"case", "file", "cost", "status"})
+                circuit = read(ROOT / "results" / entry["file"])
+                self.assertEqual(entry["case"], circuit["case"])
+                self.assertEqual(entry["cost"], circuit["cost"])
+                self.assertEqual(entry["status"], "verified_search_incumbent")
+
+    def test_logical_segment_fields(self):
+        required = {"index", "kind", "component", "gates", "cnot_count", "ccz_count"}
+        allowed = required | {"target_rows_hex"}
+        for directory in ("parents", "results"):
+            for path in sorted((ROOT / directory).glob("*.json.gz")):
+                if path.name == "index.json.gz":
+                    continue
+                with self.subTest(directory=directory, case=path.stem):
+                    for segment in read(path)["logical_source"]["segments"]:
+                        self.assertLessEqual(required, set(segment))
+                        self.assertLessEqual(set(segment), allowed)
+
+    def test_recipe_fields(self):
+        for case in CASES:
+            with self.subTest(case=case):
+                recipe = read(ROOT / "recipes" / f"{case}.json.gz")
+                self.assertEqual(set(recipe), {"case", "seed", "steps", "expected_cost"})
+                self.assertEqual(recipe["case"], case)
+                self.assertIs(type(recipe["seed"]), int)
+                for step in recipe["steps"]:
+                    self.assertEqual(
+                        set(step), {"start", "stop", "boundaries", "window", "nonlinear"}
+                    )
+
+    def test_all_recipe_replays(self):
         for case in CASES:
             with self.subTest(case=case):
                 parent = fixture(case, parent=True)

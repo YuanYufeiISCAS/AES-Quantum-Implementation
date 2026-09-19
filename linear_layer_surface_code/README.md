@@ -22,11 +22,16 @@ The optimizer combines matrix beam synthesis, exact 2–4-wire rewrites, free-ou
 | `recipes/aes_sota.json` | Synthesis seed and six refinement stages with finite work budgets. |
 | `circuits/aes.json` | Complete SOTA circuit: gates, routed paths, permutation, and costs. |
 | `tests/test_kernels.cpp`, `tests/test_verify.py`, `tests/test_cli.py` | Kernel, corruption, and deterministic-search tests. |
-| `CMakeLists.txt`, `.gitignore` | Build/test setup and generated-file exclusions. |
+| `CMakeLists.txt` | Build and test setup. |
 
 ## Build and reproduce
 
-Requirements: CMake ≥ 3.16, C++17, Python ≥ 3.10; Python uses only the standard library. The reference toolchain is GCC 11.4 with libstdc++ on Linux x86-64. Seeded ordering uses libstdc++'s random/shuffle implementation.
+Requirements: CMake ≥ 3.16, Python ≥ 3.10, and GCC or GNU-driver Clang with
+C++17 support. Python uses only the standard library. The tested reference
+environment is Linux x86-64, GCC 11.4/libstdc++, CMake 3.22.1, and Python 3.13.9.
+Clang and other operating systems are unverified; CMake rejects MSVC and
+clang-cl. Exact seeded reproduction uses the reference compiler and standard
+library because random/shuffle ordering is toolchain-dependent.
 
 Run from this directory:
 

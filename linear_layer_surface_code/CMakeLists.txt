@@ -1,12 +1,17 @@
 cmake_minimum_required(VERSION 3.16)
 project(linear_layer_surface_code LANGUAGES CXX)
 
+if(NOT CMAKE_CXX_COMPILER_ID MATCHES "^(GNU|Clang|AppleClang)$"
+   OR CMAKE_CXX_SIMULATE_ID STREQUAL "MSVC")
+    message(FATAL_ERROR
+        "The C++ backend requires GCC or GNU-driver Clang; MSVC and clang-cl are unsupported. "
+        "Reference toolchain: GCC 11.4/libstdc++ on Linux x86-64.")
+endif()
+
 add_executable(linear_surface_backend cpp/main.cpp)
 target_compile_features(linear_surface_backend PRIVATE cxx_std_17)
 set_target_properties(linear_surface_backend PROPERTIES CXX_EXTENSIONS OFF)
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(linear_surface_backend PRIVATE -Wall -Wextra -Wpedantic)
-endif()
+target_compile_options(linear_surface_backend PRIVATE -Wall -Wextra -Wpedantic)
 
 include(CTest)
 if(BUILD_TESTING)

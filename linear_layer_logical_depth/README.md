@@ -36,14 +36,15 @@ The bundled reference file's hash is still checked.
 
 ## Files and conventions
 
-- `manifest.json`: the 30 table rows in paper order, expected counts/depths,
-  citation numbers, group labels, and circuit-integrity hashes.
+- `manifest.json` (schema version 2): the paper section/table/column and the 30
+  rows in paper order, with expected counts/depths, citation numbers, group labels,
+  circuit filenames, and SHA-256 integrity hashes.
 - `circuits/<id>.json`: the complete target matrix and logical circuit for one
   row, including every gate, its layer, and the output permutation.
 - `verify.py`: independent matrix replay, bit-string simulation, depth
   accounting, input validation, and built-in self-tests.
 
-Each circuit has these fields:
+The individual circuit format remains at schema version 1, with these fields:
 
 | Field | Meaning |
 | --- | --- |

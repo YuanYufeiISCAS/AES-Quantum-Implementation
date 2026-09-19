@@ -82,6 +82,10 @@ def check_interfaces(circuit: dict) -> None:
 def verify(circuit: dict) -> dict:
     """Recompute all proofs; saved success flags have no authority."""
     try:
+        if circuit.get("schema") == "sbox-surface-code-parallel-v1":
+            from .parallel import verify as verify_parallel
+
+            return verify_parallel(circuit)
         geometry._require(circuit["schema"] == SCHEMA, "unsupported submission circuit")
         check_interfaces(circuit)
         serial = copy.deepcopy(circuit)
@@ -115,7 +119,7 @@ def verify(circuit: dict) -> dict:
             "checked_stages": temporal["checked_stages"],
             "errors": [],
         }
-    except (ValueError, KeyError, TypeError, IndexError, AttributeError, RuntimeError) as error:
+    except (AssertionError, ValueError, KeyError, TypeError, IndexError, AttributeError, RuntimeError) as error:
         return {"passed": False, "errors": [str(error)]}
 
 
